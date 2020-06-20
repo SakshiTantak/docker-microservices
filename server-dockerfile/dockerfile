@@ -1,0 +1,32 @@
+FROM ubuntu:latest
+
+LABEL MAINTAINER="kesarling"
+
+RUN apt update
+RUN apt upgrade -y
+RUN apt install apt-utils -y
+RUN apt install maven gradle -y
+RUN apt install wget tar zip unzip openjdk-14-jdk -y
+
+RUN mkdir /usr/local/apache-tomcat-v8.5.55
+RUN wget http://www-us.apache.org/dist/tomcat/tomcat-8/v8.5.55/bin/apache-tomcat-8.5.55.tar.gz -O /tmp/apache-tomcat-v8.5.55.tar.gz
+RUN cd /tmp && tar xvfz apache-tomcat-v8.5.55.tar.gz
+RUN cp -Rv /tmp/apache-tomcat-8.5.55/* /usr/local/apache-tomcat-v8.5.55/
+
+RUN mkdir /usr/local/spring-v5.2.6
+RUN wget https://repo.spring.io/release/org/springframework/spring/5.2.6.RELEASE/spring-5.2.6.RELEASE-dist.zip -O /tmp/spring-v5.2.6.zip
+RUN cd /tmp && unzip spring-v5.2.6.zip
+RUN cp -Rv /tmp/spring-framework-5.2.6.RELEASE/* /usr/local/spring-v5.2.6/
+
+
+
+RUN cd ~
+RUN touch server-start.sh
+RUN echo "#!/bin/sh" | cat > server-start.sh
+RUN echo 'bash -c "/usr/local/apache-tomcat-v8.5.55/bin/catalina.sh run&"' | cat >> server-start.sh
+RUN echo "/bin/bash" | cat >>server-start.sh
+RUN chmod +x server-start.sh
+
+EXPOSE 8080
+
+ENTRYPOINT [ "./server-start.sh" ]
