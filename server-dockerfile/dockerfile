@@ -7,10 +7,10 @@ RUN apt install apt-utils -y
 RUN apt install maven gradle -y
 RUN apt install wget tar zip unzip openjdk-14-jdk -y
 
-RUN mkdir /usr/local/apache-tomcat-v8.5.56
-RUN wget http://www-us.apache.org/dist/tomcat/tomcat-8/v8.5.56/bin/apache-tomcat-8.5.56.tar.gz -O /tmp/apache-tomcat-v8.5.56.tar.gz
-RUN cd /tmp && tar xvfz apache-tomcat-v8.5.56.tar.gz
-RUN cp -Rv /tmp/apache-tomcat-8.5.56/* /usr/local/apache-tomcat-v8.5.56/
+RUN mkdir /usr/local/apache-tomcat-v8.5.57
+RUN wget http://www-us.apache.org/dist/tomcat/tomcat-8/v8.5.57/bin/apache-tomcat-8.5.57.tar.gz -O /tmp/apache-tomcat-v8.5.57.tar.gz
+RUN cd /tmp && tar xvfz apache-tomcat-v8.5.57.tar.gz
+RUN cp -Rv /tmp/apache-tomcat-8.5.57/* /usr/local/apache-tomcat-v8.5.57/
 
 RUN mkdir /usr/local/spring-v5.2.6
 RUN wget https://repo.spring.io/release/org/springframework/spring/5.2.6.RELEASE/spring-5.2.6.RELEASE-dist.zip -O /tmp/spring-v5.2.6.zip
@@ -19,4 +19,4 @@ RUN cp -Rv /tmp/spring-framework-5.2.6.RELEASE/* /usr/local/spring-v5.2.6/
 
 EXPOSE 8080
 
-ENTRYPOINT [ "server-start.sh", "run" ]
+ENTRYPOINT /usr/local/apache-tomcat-v8.5.57/bin/catalina.sh run
