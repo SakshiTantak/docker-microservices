@@ -1,0 +1,14 @@
+FROM ubuntu:18.04
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install apt-utils wget tar -y
+RUN apt-get install gedit -y
+RUN wget http://mirror.tspu.ru/eclipse/technology/epp/downloads/release/2020-06/R/eclipse-jee-2020-06-R-linux-gtk-x86_64.tar.gz -P /opt
+RUN cd /opt && tar xvzf eclipse-jee-2020-06-R-linux-gtk-x86_64.tar.gz
+
+RUN apt-get install default-jdk -y
+
+ENTRYPOINT "/opt/eclipse/eclipse"
+
