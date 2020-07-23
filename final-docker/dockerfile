@@ -1,0 +1,29 @@
+FROM ubuntu:18.04
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt update && apt upgrade -y
+RUN apt-get install apt-utils sudo -y
+
+# INSTALL UTILITIES WGET AND TAR
+RUN apt-get install wget tar -y
+
+# INSTALL MAVEN GRADLE AND JDK
+RUN apt-get install maven gradle default-jdk -y
+
+# INSTALL ECLIPSE
+RUN wget http://mirror.tspu.ru/eclipse/technology/epp/downloads/release/2020-06/R/eclipse-jee-2020-06-R-linux-gtk-x86_64.tar.gz -P /opt
+RUN cd /opt && tar xvzf eclipse-jee-2020-06-R-linux-gtk-x86_64.tar.gz
+
+# INSTALL TOMCAT
+RUN apt-get install tomcat9 -y
+EXPOSE 8080
+
+# INSTALL SPRING LIBRARIES
+RUN mkdir "/usr/local/spring-v5.2.7"
+RUN wget "https://repo.spring.io/release/org/springframework/spring/5.2.7.RELEASE/spring-5.2.7.RELEASE-dist.zip" -P "/usr/local/spring-v5.2.7/"
+RUN unzip "/usr/local/spring-v5.2.7/spring-5.2.7.RELEASE-dist.zip"
+
+RUN apt install gedit -y
+
+ENTRYPOINT /opt/eclipse/eclipse
