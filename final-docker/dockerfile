@@ -24,6 +24,7 @@ RUN mkdir "/usr/local/spring-v5.2.7"
 RUN wget "https://repo.spring.io/release/org/springframework/spring/5.2.7.RELEASE/spring-5.2.7.RELEASE-dist.zip" -P "/usr/local/spring-v5.2.7/"
 RUN unzip "/usr/local/spring-v5.2.7/spring-5.2.7.RELEASE-dist.zip"
 
-RUN apt install gedit -y
+# INSTALL GEDIT
+RUN apt-get install "libgtk-3*" "libgtksourceview-3.0*" -y
 
 ENTRYPOINT /opt/eclipse/eclipse
