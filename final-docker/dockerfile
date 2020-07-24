@@ -15,16 +15,17 @@ RUN apt-get install maven gradle default-jdk -y
 RUN wget http://mirror.tspu.ru/eclipse/technology/epp/downloads/release/2020-06/R/eclipse-jee-2020-06-R-linux-gtk-x86_64.tar.gz -P /opt
 RUN cd /opt && tar xvzf eclipse-jee-2020-06-R-linux-gtk-x86_64.tar.gz
 
-# INSTALL TOMCAT
-RUN apt-get install tomcat9 -y
-EXPOSE 8080
+# INSTALL LIBGTK3 FOR ECLIPSE
+RUN apt-get install "libgtk-3*" "libgtksourceview-3.0*" -y
 
 # INSTALL SPRING LIBRARIES
 RUN mkdir "/usr/local/spring-v5.2.7"
 RUN wget "https://repo.spring.io/release/org/springframework/spring/5.2.7.RELEASE/spring-5.2.7.RELEASE-dist.zip" -P "/usr/local/spring-v5.2.7/"
-RUN unzip "/usr/local/spring-v5.2.7/spring-5.2.7.RELEASE-dist.zip"
+RUN cd "/usr/local/spring-v5.2.7/" && unzip "spring-5.2.7.RELEASE-dist.zip"
 
-# INSTALL GEDIT
-RUN apt-get install "libgtk-3*" "libgtksourceview-3.0*" -y
+#INSTALL TOMCAT
+RUN apt install tomcat9 -y
+EXPOSE 8080
 
 ENTRYPOINT /opt/eclipse/eclipse
+# CMD /bin/bash
