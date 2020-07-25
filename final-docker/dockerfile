@@ -30,6 +30,10 @@ RUN cd /tmp && tar xvfz apache-tomcat-v8.5.57.tar.gz
 RUN cp -Rv /tmp/apache-tomcat-8.5.57/* /usr/local/apache-tomcat-v8.5.57/
 EXPOSE 8080
 
+#CREATE ENVIRONMENT VARIABLES
+RUN echo "export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64" | cat >> /root/.bashrc
+RUN echo "export JAVA_EXECUTABLE_HOME=\$JAVA_HOME/bin" | cat >> /root/.bashrc
+
 # CREATE RUN SCRIPT
 RUN touch startup.sh
 RUN chmod +x startup.sh
