@@ -12,7 +12,9 @@ RUN apt-get install wget tar -y
 RUN apt-get install maven gradle -y
 
 # INSTALL OPENJDK
-RUN apt-get install openjdk-11-jdk -y
+RUN wget https://download.java.net/java/GA/jdk14.0.2/205943a0976c4ed48cb16f1043c5c647/12/GPL/openjdk-14.0.2_linux-x64_bin.tar.gz -P /opt/jdk-14
+RUN cd /opt/jdk-14 && tar xvzf openjdk-14.0.2_linux-x64_bin.tar.gz
+
 
 # INSTALL ECLIPSE
 RUN wget http://mirror.tspu.ru/eclipse/technology/epp/downloads/release/2020-06/R/eclipse-jee-2020-06-R-linux-gtk-x86_64.tar.gz -P /opt
@@ -34,14 +36,15 @@ RUN cp -Rv /tmp/apache-tomcat-8.5.57/* /usr/local/apache-tomcat-v8.5.57/
 EXPOSE 8080
 
 #CREATE ENVIRONMENT VARIABLES
-RUN echo "export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64" | cat >> /root/.bashrc
-RUN echo "export JAVA_EXECUTABLE_HOME=\$JAVA_HOME/bin" | cat >> /root/.bashrc
+RUN echo "export JAVA_HOME=/opt/jdk-14/jdk-14.0.2" | cat >> /root/.bashrc
+RUN echo "export JAVA=\$JAVA_HOME/bin" | cat >> /root/.bashrc
+RUN echo "export PATH=\$PATH:\$JAVA_HOME:\$JAVA" | cat >> /root/.bashrc
 
 # CREATE RUN SCRIPT
 RUN touch startup.sh
 RUN chmod +x startup.sh
-RUN echo "if [ -z $\{DISPLAY+x\} ]; then\n\t/usr/local/apache-tomcat-v8.5.57/bin/catalina.sh run;\nelse\n\t/opt/eclipse/eclipse&\n\t/usr/local/apache-tomcat-v8.5.57/bin/catalina.sh run\nfi" | cat > startup.sh
-RUN sed -i 's/\\//g' startup.sh
+RUN echo "if [ -z \$DISPLAY+x ]; then\n\t/usr/local/apache-tomcat-v8.5.57/bin/catalina.sh run;\nelse\n\t/opt/eclipse/eclipse&\n\t/usr/local/apache-tomcat-v8.5.57/bin/catalina.sh run\nfi" | cat > startup.sh
+# RUN sed -i 's/\\//g' startup.sh
 
 
 ENTRYPOINT ./startup.sh
