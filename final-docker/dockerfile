@@ -44,7 +44,5 @@ RUN echo "export PATH=\$PATH:\$JAVA_HOME:\$JAVA" | cat >> /root/.bashrc
 RUN touch startup.sh
 RUN chmod +x startup.sh
 RUN echo "if [ -z \$DISPLAY+x ]; then\n\t/usr/local/apache-tomcat-v8.5.57/bin/catalina.sh run;\nelse\n\t/opt/eclipse/eclipse&\n\t/usr/local/apache-tomcat-v8.5.57/bin/catalina.sh run\nfi" | cat > startup.sh
-# RUN sed -i 's/\\//g' startup.sh
-
 
 ENTRYPOINT ./startup.sh
