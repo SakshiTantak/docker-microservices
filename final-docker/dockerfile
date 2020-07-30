@@ -44,4 +44,7 @@ RUN touch startup.sh
 RUN chmod +x startup.sh
 RUN echo "if [ -z \$DISPLAY+x ]; then\n\t/usr/local/apache-tomcat-v8.5.57/bin/catalina.sh run;\nelse\n\t/opt/eclipse/eclipse&\n\t/usr/local/apache-tomcat-v8.5.57/bin/catalina.sh run\nfi" | cat > startup.sh
 
+RUN wget https://www.icescrum.com/downloads/v7/icescrum.war -P /usr/local/apache-tomcat-v8.5.57/webpps/icescrum/icescrum.war
+
+
 ENTRYPOINT ./startup.sh
