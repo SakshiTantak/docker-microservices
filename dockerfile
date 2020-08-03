@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt update && apt upgrade -y
 
 #INSTALL OPENJDK
-RUN apt-get install openjdk-11-jre-headless openjdk-11-jdk-headless -y
+RUN apt-get install -y default-jdk
 
 #INSTALL UTILITIES
 RUN apt-get update && apt-get install wget tar unzip -y
@@ -39,5 +39,9 @@ RUN echo "if [ -z \$DISPLAY+x ]; then\n\t/usr/local/apache-tomcat-v8.5.57/bin/ca
 
 COPY TestRIOJavaStack.zip /usr/local/apache-tomcat-v8.5.57/webapps
 RUN cd /usr/local/apache-tomcat-v8.5.57/webapps && unzip TestRIOJavaStack.zip
+
+RUN echo "export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64" | cat >> /root/.bashrc
+RUN echo "export JAVA=\$JAVA_HOME/bin" | cat >> /root/.bashrc
+RUN echo "export PATH=\$PATH:\$JAVA_HOME:\$JAVA" | cat >> /root/.bashrc
 
 ENTRYPOINT ./startup.sh
