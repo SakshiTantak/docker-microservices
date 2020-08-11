@@ -1,0 +1,13 @@
+FROM ubuntu:18.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y default-jdk
+RUN apt-get install -y vim nmap wget
+RUN wget http://apachemirror.wuchna.com/tomcat/tomcat-9/v9.0.37/bin/apache-tomcat-9.0.37.tar.gz -O /tmp/tomcat9.tar.xz
+RUN mkdir -p /usr/local/tomcat9
+RUN cd /tmp && tar xvzf tomcat9.tar.xz
+RUN cp -Rv /tmp/apache-tomcat-9.0.37/* /usr/local/tomcat9
+EXPOSE 8080
+ENTRYPOINT /usr/local/tomcat9/bin/catalina.sh run

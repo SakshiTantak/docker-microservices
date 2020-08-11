@@ -1,0 +1,12 @@
+version: '3'
+services:
+    tomcat:
+        build: 
+            context: .
+            dockerfile: tomcat-dockerfile
+        image: tomcat-docker:latest
+    eclipse:
+        build:
+            context: .
+            dockerfile: eclipse-dockerfile
+        image: eclipse-docker:latest

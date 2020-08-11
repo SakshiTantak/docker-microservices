@@ -1,0 +1,17 @@
+FROM ubuntu:18.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y default-jdk
+RUN apt-get install -y wget
+
+RUN mkdir -p /opt/eclipse
+RUN wget http://ftp.yz.yamagata-u.ac.jp/pub/eclipse/technology/epp/downloads/release/neon/3/eclipse-jee-neon-3-linux-gtk-x86_64.tar.gz -O /tmp/eclipse.tar.gz
+RUN cd /tmp && mv eclipse.tar.gz /opt/eclipse/
+RUN cd /opt/eclipse && tar xvzf eclipse.tar.gz && rm eclipse.tar.gz
+
+RUN apt-get install "libgtk-3*" "libgtksourceview-3.0*" -y
+RUN apt-get install -y dbus* webkit*
+
+ENTRYPOINT /opt/eclipse/eclipse
