@@ -14,4 +14,4 @@ RUN cd /opt/eclipse && tar xvzf eclipse.tar.gz && rm eclipse.tar.gz
 RUN apt-get install "libgtk-3*" "libgtksourceview-3.0*" -y
 RUN apt-get install -y dbus* webkit*
 
-ENTRYPOINT /opt/eclipse/eclipse
+ENTRYPOINT /opt/eclipse/eclipse/eclipse
