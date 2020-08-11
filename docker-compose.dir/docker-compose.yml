@@ -10,3 +10,7 @@ services:
             context: .
             dockerfile: eclipse-dockerfile
         image: eclipse-docker:latest
+        environment:
+            - net=host
+            - DISPLAY=$DISPLAY
+            - VOLUME=$HOME/.Xauthority:/root/.Xauthority:rw
