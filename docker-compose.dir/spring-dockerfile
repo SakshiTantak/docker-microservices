@@ -1,0 +1,17 @@
+FROM ubuntu:18.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt update && apt upgrade -y
+RUN apt-get install -y default-jdk maven
+RUN apt-get install -y git wget
+RUN cd /root && git clone https://github.com/spring-guides/gs-spring-boot.git
+RUN /root/gs-spring-boot/test/run.sh
+RUN wget https://repo.spring.io/release/org/springframework/boot/spring-boot-cli/2.3.2.RELEASE/spring-boot-cli-2.3.2.RELEASE-bin.tar.gz -O /tmp/spring-cli.tar.gz
+RUN mkdir -p /usr/local/spring-boot
+RUN mv /tmp/spring-cli.tar.gz /usr/local/spring-boot
+RUN cd /usr/local/spring-boot/ && tar xvzf spring-cli.tar.gz
+
+RUN /usr/local/spring-boot/spring-2.3.2.RELEASE/bin/spring install org.springframework.cloud:spring-cloud-cli:2.2.0.BUILD-SNAPSHOT
+
+CMD /bin/bash

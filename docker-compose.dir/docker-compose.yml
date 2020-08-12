@@ -14,3 +14,11 @@ services:
             - net=host
             - DISPLAY=$DISPLAY
             - VOLUME=$HOME/.Xauthority:/root/.Xauthority:rw
+    spring:
+        build:
+            context: .
+            dockerfile: spring-dockerfile            
+    mysql:
+        build:
+            context: .
+            dockerfile: mysql-dockerfile
