@@ -14,9 +14,17 @@ RUN apt-get update && apt-get install wget tar unzip -y
 RUN apt-get install "libgtk-3*" "libgtksourceview-3.0*" -y
 
 # INSTALL SPRING LIBRARIES
-RUN mkdir "/usr/local/spring-v5.2.7"
-RUN wget "https://repo.spring.io/release/org/springframework/spring/5.2.7.RELEASE/spring-5.2.7.RELEASE-dist.zip" -P "/usr/local/spring-v5.2.7/"
-RUN cd "/usr/local/spring-v5.2.7/" && unzip "spring-5.2.7.RELEASE-dist.zip"
+RUN apt-get install -y default-jdk maven
+RUN apt-get install -y git wget
+RUN cd /root && git clone https://github.com/spring-guides/gs-spring-boot.git
+RUN /root/gs-spring-boot/test/run.sh
+RUN wget https://repo.spring.io/release/org/springframework/boot/spring-boot-cli/2.3.2.RELEASE/spring-boot-cli-2.3.2.RELEASE-bin.tar.gz -O /tmp/spring-cli.tar.gz
+RUN mkdir -p /usr/local/spring-boot
+RUN mv /tmp/spring-cli.tar.gz /usr/local/spring-boot
+RUN cd /usr/local/spring-boot/ && tar xvzf spring-cli.tar.gz
+
+RUN /usr/local/spring-boot/spring-2.3.2.RELEASE/bin/spring install org.springframework.cloud:spring-cloud-cli:2.2.0.BUILD-SNAPSHOT
+
 
 #INSTALL TOMCAT
 RUN mkdir /usr/local/apache-tomcat-v8.5.57
