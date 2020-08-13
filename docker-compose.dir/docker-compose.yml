@@ -5,6 +5,9 @@ services:
             context: .
             dockerfile: tomcat-dockerfile
         image: tomcat-docker:latest
+        ports:
+            - "8080"
+        restart: always
     eclipse:
         build:
             context: .
@@ -18,7 +21,9 @@ services:
         build:
             context: .
             dockerfile: spring-dockerfile            
+        restart: always
     mysql:
-        build:
-            context: .
-            dockerfile: mysql-dockerfile
+        image: mysql/mysql:8.0
+        ports: 
+            - "8081"
+        restart: always
