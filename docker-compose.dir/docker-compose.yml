@@ -13,17 +13,20 @@ services:
             context: .
             dockerfile: eclipse-dockerfile
         image: eclipse-docker:latest
-        environment:
-            - net=host
-            - DISPLAY=$DISPLAY
-            - VOLUME=$HOME/.Xauthority:/root/.Xauthority:rw
+        volumes:
+            - "$HOME/.Xauthority:/root/.Xauthority:rw"
+            - "/tmp/.X11-unix:/tmp/.X11-unix"
+        network_mode: "host"
+        environment: 
+            - DISPLAY
+        restart: always
     spring:
         build:
             context: .
             dockerfile: spring-dockerfile            
         restart: always
     mysql:
-        image: mysql/mysql:8.0
+        image: mysql:5.7
         ports: 
             - "8081"
         restart: always
